@@ -14,18 +14,6 @@ data:
         port => 5044
       }
     }
-    filter {
-      if [message] =~ /^\{.*\}$/ {
-        json {
-          source => "message"
-        }
-      }
-      if [ClientHost] {
-        geoip {
-          source => "ClientHost"
-        }
-      }
-    }
     output {
         elasticsearch {
             hosts => [ "elasticsearch-logging:9200" ]
@@ -49,7 +37,7 @@ spec:
     spec:
       containers:
       - name: logstash
-        image: docker.elastic.co/logstash/logstash:6.3.0
+        image: docker.elastic.co/logstash/logstash:7.10.0
         ports:
         - containerPort: 5044
         volumeMounts:
