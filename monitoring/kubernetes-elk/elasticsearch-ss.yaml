@@ -105,7 +105,7 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: elasticsearch-logging
-          mountPath: /data
+          mountPath: /usr/share/elasticsearch/data
         env:
         - name: "NAMESPACE"
           valueFrom:
