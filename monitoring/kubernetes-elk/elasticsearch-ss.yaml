@@ -1,4 +1,4 @@
-# RBAC authn and authz
+## RBAC authn and authz
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -46,18 +46,18 @@ roleRef:
   name: elasticsearch-logging
   apiGroup: ""
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: elasticsearch-pvc
-  namespace: kube-system
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: standard
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+  #name: elasticsearch-pvc
+  #namespace: kube-system
+#spec:
+  #accessModes:
+  #- ReadWriteOnce
+  #resources:
+    #requests:
+      #storage: 10Gi
+  #storageClassName: standard
 
 # Elasticsearch deployment itself
 apiVersion: apps/v1
@@ -113,10 +113,15 @@ spec:
               fieldPath: metadata.namespace
       volumes:
       - name: elasticsearch-logging
-        persistentVolumeClaim:
-          claimName: elasticsearch-pvc
-        securityContext:
-          privileged: true
+        emptyDir: {}
+      tolerations:
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
+        #persistentVolumeClaim:
+          #claimName: elasticsearch-pvc
+        #securityContext:
+          #privileged: true
 ---
 apiVersion: v1
 kind: Service
