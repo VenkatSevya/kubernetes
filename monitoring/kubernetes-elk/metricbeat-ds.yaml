@@ -7,7 +7,7 @@ metadata:
     k8s-app: metricbeat
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: metricbeat
@@ -132,7 +132,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: metricbeat
-        image: docker.elastic.co/beats/metricbeat:6.3.0
+        image: docker.elastic.co/beats/metricbeat:7.07.9
         args: [
           "-c", "/etc/metricbeat.yml",
           "-e",
